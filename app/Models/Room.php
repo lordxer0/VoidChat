@@ -8,6 +8,9 @@ use App\Models\Message;
 class Room extends Model
 {
     //
+    protected $fillable = [
+        'name',
+    ];
 
     public function messages()
     {

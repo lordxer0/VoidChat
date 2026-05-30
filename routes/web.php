@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Room;
 
 Route::get('/', function () {
-    return view('welcome');
+    $room = Room::first();
+
+    return view('chat', compact('room'));
 });
