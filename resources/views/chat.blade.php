@@ -29,6 +29,14 @@
             padding:15px;
             border-radius:10px;
         }
+
+        .message{
+            background:#1a1a1a;
+            border:1px solid #2a2a2a;
+            padding:10px;
+            margin-top:10px;
+            border-radius:10px;
+        }
     </style>
 </head>
 <body>
@@ -39,19 +47,49 @@
     <div class="room">
         Room: {{ $room->name }}
 
-        <div class="messages">
-            @forelse($room->messages as $message)
-                <p>
-                    <strong>{{ $message->username }}</strong>:
-                    {{ $message->message }}
-                </p>
-            @empty
-                <p>El vacío guarda silencio...</p>
-            @endforelse
+        <div id="messages" class="messages">
+            
         </div>
         
     </div>
+
+    <form method="POST" action="{{ url('/message') }}">
+        @csrf
+        <div>
+            <label for="username">User</label>
+            <input id="username" type="text" name="username">
+        </div>
+        <div>
+            <label for="message">Message</label>
+            <input id="message" type="text" name="message">
+        </div>
+    
+        <button>Send</button>
+    </form>
 </div>
 
+<script>
+
+    
+    async function loadMessages() {
+        const res = await fetch('/messages');
+        const data = await res.json();
+
+        const box = document.getElementById('messages');
+        box.innerHTML = '';
+
+        data.forEach(m => {
+            box.innerHTML += `
+                <div>
+                    <b>${m.username}</b>: ${m.message}
+                </div>
+            `;
+        });
+    }
+
+    setInterval(loadMessages, 500);
+    loadMessages();
+</script>
+    
 </body>
 </html>
