@@ -85,6 +85,9 @@
                 </div>
             `;
         });
+
+        box.scrollTop = box.scrollHeight;
+        
     }
 
     setInterval(loadMessages, 500);

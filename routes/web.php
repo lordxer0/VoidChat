@@ -22,5 +22,7 @@ Route::post('/message', function () {
 });
 
 Route::get('/messages', function () {
-    return App\Models\Room::with('messages')->first()->messages;
+    return Room::with(['messages' => function ($q) {
+        $q->orderBy('id');
+    }])->first()->messages;
 });
