@@ -18,7 +18,9 @@ return new class extends Migration
                   ->constrained()
                   ->cascadeOnDelete();
         
-            $table->string('username');
+            $table->foreignId('user_id')
+                  ->constrained()
+                  ->cascadeOnDelete();
         
             $table->text('message');
         
